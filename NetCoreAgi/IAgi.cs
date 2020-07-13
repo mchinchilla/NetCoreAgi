@@ -7,9 +7,10 @@ namespace NetCoreAgi
 {
     public interface IAgi
     {
-        // *********************************************************************************************************
-        // **                             COMMANDS                                                                **
-        // *********************************************************************************************************
+        // ********************************************************************************
+        // **                             COMMANDS                                       **
+        // ********************************************************************************
+
         Task<ICommandResponse> answer();
         Task<ICommandResponse> channel_status(string channel="");
         Task<ICommandResponse> database_del(string family, string key);
@@ -44,9 +45,9 @@ namespace NetCoreAgi
         Task<ICommandResponse> verbose(string message, int level=1);
         Task<ICommandResponse> wait_for_digit(int timeout=-1);
 
-        // *********************************************************************************************************
-        // **                             APPLICATIONS                                                            **
-        // *********************************************************************************************************
+        // ********************************************************************************
+        // **                             APPLICATIONS                                   **
+        // ********************************************************************************
         
         Task<ICommandResponse> exec_absolutetimeout(int seconds = 0);
         Task<ICommandResponse> exec_agi(string command, string args);
