@@ -1,13 +1,22 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace NetCoreAgi
 {
     public class Agi : IAgi
     {
+        private static IDictionary<string, string> channelVars = new Dictionary<string, string>();
+        private string info = string.Empty;
+        private StringBuilder input = new StringBuilder();
+        private StringBuilder linebld = new StringBuilder();
+        private string line = string.Empty;
+        private int endOfFile = 0;
+
         public Agi()
         {
-
+            channelVars = get_channel_variables();
         }
 
         public Task<ICommandResponse> answer()
@@ -16,6 +25,11 @@ namespace NetCoreAgi
         }
 
         public Task<ICommandResponse> channel_status(string channel = "")
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ICommandResponse> conlog(string message, int verbose = 1)
         {
             throw new NotImplementedException();
         }
@@ -36,6 +50,11 @@ namespace NetCoreAgi
         }
 
         public Task<ICommandResponse> database_put(string family, string key, string value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ICommandResponse> evaluate(string command)
         {
             throw new NotImplementedException();
         }
@@ -75,9 +94,81 @@ namespace NetCoreAgi
             throw new NotImplementedException();
         }
 
-        public Task<ICommandResponse> fastpass_say_digits(string buffer, int digits, string scape_digits = "")
+        public Task<ICommandResponse> fastpass_get_data(string buffer, string filename, int? timeout = null, int? max_digits = null)
         {
             throw new NotImplementedException();
+        }
+
+        public Task<ICommandResponse> fastpass_say_digits(string buffer, int digits, string escape_digits = "")
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ICommandResponse> fastpass_say_phonetic(string buffer, string text, string escape_digits = "")
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ICommandResponse> fastpass_say_punctuation(string buffer, string text, string escape_digits = "", int? frequency = 8000)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ICommandResponse> fastpass_say_time(string buffer, int? time = null, string escape_digits = "")
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ICommandResponse> fastpass_stream_file(string buffer, string filename, string escape_digits = "", int? offset = 0)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ICommandResponse> fastpass_swift(string buffer, string text, string escape_digits = "", int? frequency = 8000, int? voice = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ICommandResponse> fastpass_text2wav(string buffer, string text, string escape_digits = "", int? frequency = 8000)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IDictionary<string, string> get_channel_variables()
+        {
+            // Get channels agi variables
+            
+            IDictionary<string, string> chanVars = new Dictionary<string, string>();
+            input = new StringBuilder();
+            endOfFile = 0;
+            line = string.Empty;
+
+            while ((endOfFile = Console.In.Read()) != -1)
+            {
+                if ((char)endOfFile != 10)
+                {
+                    input.Append(((char)endOfFile).ToString());
+                    linebld.Append(((char)endOfFile).ToString());
+                    string s = input.ToString();
+                }
+                else
+                {
+                    line = linebld.ToString();
+                    if (line == string.Empty)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        string[] keyPairs = line.Split(':');
+                        chanVars.Add(keyPairs[0].Trim(), keyPairs[1].Trim());
+                        line = string.Empty;
+                        linebld.Clear();
+                    }
+
+                }
+            }
+            return chanVars;
         }
 
         public Task<ICommandResponse> get_data(string filename, int timeout, int? max_digits = null)
@@ -110,27 +201,27 @@ namespace NetCoreAgi
             throw new NotImplementedException();
         }
 
-        public Task<ICommandResponse> record_file(string file, string format, string escape_digits = "", int timeout = -1, int? offset = null, bool beep = false, int? silence = null)
+        public Task<ICommandResponse> record_file(string file, string format, string eescape_digits = "", int timeout = -1, int? offset = null, bool beep = false, int? silence = null)
         {
             throw new NotImplementedException();
         }
 
-        public Task<ICommandResponse> say_digits(int digits, string escape_digits = "")
+        public Task<ICommandResponse> say_digits(int digits, string eescape_digits = "")
         {
             throw new NotImplementedException();
         }
 
-        public Task<ICommandResponse> say_number(int number, string escape_digits = "")
+        public Task<ICommandResponse> say_number(int number, string eescape_digits = "")
         {
             throw new NotImplementedException();
         }
 
-        public Task<ICommandResponse> say_phonetic(string text, string escape_digits = "")
+        public Task<ICommandResponse> say_phonetic(string text, string eescape_digits = "")
         {
             throw new NotImplementedException();
         }
 
-        public Task<ICommandResponse> say_time(int? time = null, string escape_digits = "")
+        public Task<ICommandResponse> say_time(int? time = null, string eescape_digits = "")
         {
             throw new NotImplementedException();
         }
@@ -141,6 +232,11 @@ namespace NetCoreAgi
         }
 
         public Task<ICommandResponse> send_text(string text)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ICommandResponse> setContext(string context, string extension = "s", int prioriry = 1)
         {
             throw new NotImplementedException();
         }
@@ -190,7 +286,7 @@ namespace NetCoreAgi
             throw new NotImplementedException();
         }
 
-        public Task<ICommandResponse> stream_file(string filename, string escape_digits = "", int offset = 0)
+        public Task<ICommandResponse> stream_file(string filename, string eescape_digits = "", int offset = 0)
         {
             throw new NotImplementedException();
         }
